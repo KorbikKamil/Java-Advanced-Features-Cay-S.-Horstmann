@@ -1,5 +1,10 @@
 package collecting;
 
+/**
+ * @version 1.01 2018-05-01
+ * @author Cay Horstmann
+ */
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
