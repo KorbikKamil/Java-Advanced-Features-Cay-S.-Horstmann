@@ -1,5 +1,10 @@
 package parallel;
 
+/**
+ * @version 1.01 2018-05-01
+ * @author Cay Horstmann
+ */
+
 import static java.util.stream.Collectors.*;
 
 import java.io.IOException;
