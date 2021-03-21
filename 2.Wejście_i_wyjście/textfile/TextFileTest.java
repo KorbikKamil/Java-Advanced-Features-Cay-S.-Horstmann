@@ -21,13 +21,13 @@ public class TextFileTest {
         staff[2] = new Employee("Tony Tester", 40000, 1990, 3, 15);
 
         //zapisuje wszystkie rekordy pracowników w pliku employee.dat
-        try (var out = new PrintWriter("employee.dat", StandardCharsets.UTF_8)) {
+        try (var out = new PrintWriter("employeeTextFile.dat", StandardCharsets.UTF_8)) {
             writeData(staff, out);
         }
 
         //wczytuje wszystkie rekordy do nowej tablicy
         try (var in = new Scanner(
-                new FileInputStream("employee.dat"), "UTF-8")) {
+                new FileInputStream("employeeTextFile.dat"), "UTF-8")) {
             Employee[] newStaff = readData(in);
 
             //Wyświetla wszystkie wczytane rekordy
