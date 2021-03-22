@@ -15,13 +15,13 @@ public class RandomAccessTest {
         staff[1] = new Employee("Harry Hacker", 50000, 1989, 10, 1);
         staff[2] = new Employee("Tony Tester", 40000, 1990, 3, 15);
 
-        try (var out = new DataOutputStream(new FileOutputStream("employeeRandomAccess.dat"))) {
+        try (var out = new DataOutputStream(new FileOutputStream("2.Wejście_i_wyjście/employeeRandomAccess.dat"))) {
             //Zapisuje rekordy wszystkich pracowników w pliku employee.dat
             for (Employee e : staff)
                 writeData(out, e);
         }
 
-        try (var in = new RandomAccessFile("employeeRandomAccess.dat", "r")) {
+        try (var in = new RandomAccessFile("2.Wejście_i_wyjście/employeeRandomAccess.dat", "r")) {
             //Wczytuje wszystkie rekordy do nowej tablicy
 
             //Oblicza rozmiar tablicy

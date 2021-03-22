@@ -76,7 +76,7 @@ public class DownstreamCollectors {
         System.out.println("stateToCityNames1" + stateToCityNames);
 
 
-        cities = readCities("cities.txt");
+        cities = readCities("1.Strumienie/cities.txt");
         stateToCityNames = cities.collect(groupingBy(City::getState, mapping(City::getName, joining(", "))));
         System.out.println("stateToCityNames2" + stateToCityNames);
     }
