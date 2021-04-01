@@ -1,0 +1,78 @@
+package urlConnection;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+/**
+ * Program łączący się z lokalizacją określoną przez URL i wyświetlający
+ * dane nagłówka odpowiedzi oraz pierwszych 10 wierszy danych żądanego zasobu.
+ * <p>
+ * Parametrem programu jest adres URL oraz, opcjonalnie, nazwa i hasło
+ * służące do uwierzytelniania użytkownika w protokole HTTP.
+ *
+ * @author Cay Horstmann
+ * @version 1.12 2018-03-17
+ */
+public class URLConnectionTest {
+    public static void main(String[] args) {
+        try {
+            String urlName;
+            if (args.length > 0) urlName = args[0];
+            else urlName = "https://www.put.poznan.pl/";
+
+            var url = new URL(urlName);
+            URLConnection connection = url.openConnection();
+
+            //Wykorzystuje nazwę użytkownika i hasło, jeśli zostały podane w wierszu poleceń
+
+            if (args.length > 2) {
+                String username = args[1];
+                String password = args[2];
+                String input = username + ":" + password;
+                Base64.Encoder encoder = Base64.getEncoder();
+                String encoding = encoder.encodeToString(input.getBytes(StandardCharsets.UTF_8));
+                connection.setRequestProperty("Authorization", "Basic " + encoding);
+            }
+
+            connection.connect();
+
+            //Wyświetla pola nagłówka
+
+            Map<String, List<String>> headers = connection.getHeaderFields();
+            for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+                String key = entry.getKey();
+                for (String value : entry.getValue())
+                    System.out.println(key + ": " + value);
+            }
+
+            //Wyświetla rezultaty działania metod dostępu do wartości
+
+            System.out.println("-----------");
+            System.out.println("getContentType: " + connection.getContentType());
+            System.out.println("getContentLength: " + connection.getContentLength());
+            System.out.println("getContentEncoding: " + connection.getContentEncoding());
+            System.out.println("getDate: " + connection.getDate());
+            System.out.println("getExpiration: " + connection.getExpiration());
+            System.out.println("getLastModified: " + connection.getLastModified());
+            System.out.println("-----------");
+
+            String encoding = connection.getContentEncoding();
+            if (encoding == null) encoding = "UTF-8";
+            try (var in = new Scanner(connection.getInputStream(), encoding)) {
+                //Wyświetla pierwszych 10 wierszy danych zasobu
+
+                for (int n = 1; in.hasNextLine() && n <= 10; n++)
+                    System.out.println(in.nextLine());
+                if (in.hasNextLine()) System.out.println(". . .");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
