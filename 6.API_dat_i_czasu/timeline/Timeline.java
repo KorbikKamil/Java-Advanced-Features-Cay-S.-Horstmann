@@ -8,6 +8,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * @version 1.0 2016-05-10
+ * @author Cay Horstmann
+ */
 public class Timeline {
     public static void main(String[] args) {
         Instant start = Instant.now();
